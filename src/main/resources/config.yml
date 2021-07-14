@@ -29,8 +29,7 @@ actionbar-settings:
 bossbar-settings:
   name: "Fear"
   color: RED
-  enable-fog: true
-  enable-darken-sky: true
+# Fog and Dark sky was removed because im lazy.
 
 # If you have any authorization plugins (to prevent fear grow before authorize). Players will move to get authorized.
 check-authorized: true
