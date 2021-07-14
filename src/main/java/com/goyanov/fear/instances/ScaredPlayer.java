@@ -50,8 +50,7 @@ public class ScaredPlayer
             giveCriticalEffects();
         }
 
-        BarFlag[] flags = new BarFlag[2];
-        fearBossbar = Bukkit.createBossBar(PluginSettings.BossBarSettings.getName(), PluginSettings.BossBarSettings.getColor(), BarStyle.SEGMENTED_10, flags);
+        fearBossbar = Bukkit.createBossBar(PluginSettings.BossBarSettings.getName(), PluginSettings.BossBarSettings.getColor(), BarStyle.SEGMENTED_10);
         fearBossbar.setProgress(currentFear/100);
         fearBossbar.addPlayer(bukkitPlayer);
 
