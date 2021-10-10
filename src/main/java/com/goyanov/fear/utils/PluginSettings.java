@@ -133,6 +133,28 @@ public class PluginSettings
         }
     }
 
+    public static class OptifineSettings
+    {
+        public static final ArrayList<Material> GLOWING_ITEMS = new ArrayList<>();
+
+        private static boolean considerOptifine;
+        private static double droppedItemsLightRadius;
+        private static double burningMobsLightRadius;
+
+        public static boolean getConsiderOptifine()
+        {
+            return considerOptifine;
+        }
+        public static double getBurningMobsLightRadius()
+        {
+            return burningMobsLightRadius;
+        }
+        public static double getDroppedItemsLightRadius()
+        {
+            return droppedItemsLightRadius;
+        }
+    }
+
     private static boolean checkAuthorized;
     public static boolean getCheckAuthorized()
     {
@@ -150,13 +172,6 @@ public class PluginSettings
     {
         return actionBarMessage;
     }
-
-    private static boolean considerOptifine;
-    public static boolean getConsiderOptifine()
-    {
-        return considerOptifine;
-    }
-    public static final ArrayList<Material> GLOWING_ITEMS = new ArrayList<>();
 
     public static void reload()
     {
@@ -218,12 +233,14 @@ public class PluginSettings
             else FearFeeling.inst().getLogger().warning("<<worlds-blacklist>> No world with name " + worldName + ". Skipping.");
         }
 
-        considerOptifine = config.getBoolean("optifine.consider");
-        GLOWING_ITEMS.clear();
+        OptifineSettings.considerOptifine = config.getBoolean("optifine.consider");
+        OptifineSettings.droppedItemsLightRadius = config.getDouble("optifine.dropped-glowing-items-light-radius");
+        OptifineSettings.burningMobsLightRadius = config.getDouble("optifine.burning-mobs-light-radius");
+        OptifineSettings.GLOWING_ITEMS.clear();
         for (String line : config.getStringList("optifine.items"))
         {
             try {
-                GLOWING_ITEMS.add(Material.valueOf(line.toUpperCase()));
+                OptifineSettings.GLOWING_ITEMS.add(Material.valueOf(line.toUpperCase()));
             } catch (Exception e) {
                 FearFeeling.inst().getLogger().warning("<<optifine-items>> No Material with name " + line);
             }

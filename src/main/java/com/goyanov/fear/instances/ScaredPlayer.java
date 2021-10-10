@@ -50,7 +50,7 @@ public class ScaredPlayer
             giveCriticalEffects();
         }
 
-        fearBossbar = Bukkit.createBossBar(PluginSettings.BossBarSettings.getName(), PluginSettings.BossBarSettings.getColor(), BarStyle.SEGMENTED_10);
+        fearBossbar = Bukkit.createBossBar(PluginSettings.BossBarSettings.getName().replace("%f", (int)currentFear+""), PluginSettings.BossBarSettings.getColor(), BarStyle.SEGMENTED_10);
         fearBossbar.setProgress(currentFear/100);
         fearBossbar.addPlayer(bukkitPlayer);
 

@@ -9,10 +9,11 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Optional;
 
 public class FearIncreaseTimer extends BukkitRunnable
 {
@@ -33,10 +34,18 @@ public class FearIncreaseTimer extends BukkitRunnable
 
     private boolean checkOptifine(Player p)
     {
-        if (!PluginSettings.getConsiderOptifine()) return false;
+        if (!PluginSettings.OptifineSettings.getConsiderOptifine()) return false;
 
-        if (PluginSettings.GLOWING_ITEMS.contains(p.getInventory().getItemInMainHand().getType())) return true;
-        if (PluginSettings.GLOWING_ITEMS.contains(p.getInventory().getItemInOffHand().getType())) return true;
+        if (PluginSettings.OptifineSettings.GLOWING_ITEMS.contains(p.getInventory().getItemInMainHand().getType())) return true;
+        if (PluginSettings.OptifineSettings.GLOWING_ITEMS.contains(p.getInventory().getItemInOffHand().getType())) return true;
+
+        double droppedItemsLightRadius = PluginSettings.OptifineSettings.getDroppedItemsLightRadius();
+        Optional<Item> dropped = p.getNearbyEntities(droppedItemsLightRadius,droppedItemsLightRadius,droppedItemsLightRadius).stream().filter(ent -> ent instanceof Item).map(ent -> (Item) ent).filter(drop -> PluginSettings.OptifineSettings.GLOWING_ITEMS.contains(drop.getItemStack().getType())).findAny();
+        if (dropped.isPresent()) return true;
+
+        double burningMobsLightRadius = PluginSettings.OptifineSettings.getBurningMobsLightRadius();
+        Optional<Entity> burning = p.getNearbyEntities(burningMobsLightRadius,burningMobsLightRadius,burningMobsLightRadius).stream().filter(ent -> ent.getFireTicks() > 0).findAny();
+        if (burning.isPresent()) return true;
 
         return false;
     }
@@ -65,6 +74,7 @@ public class FearIncreaseTimer extends BukkitRunnable
             double finalFear = sp.getFinalFear();
 
             sp.getFearBossbar().setProgress(currentFear/100);
+            sp.getFearBossbar().setTitle(PluginSettings.BossBarSettings.getName().replace("%f", (int)currentFear+""));
 
             if (sp.getFearShowStyle() == FearShowStyle.ACTIONBAR)
             {
