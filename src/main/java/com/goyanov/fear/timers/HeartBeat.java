@@ -43,10 +43,10 @@ public class HeartBeat extends BukkitRunnable
             switch (counter++)
             {
                 case 1:
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.5F, 0.7F);
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM , 0.5F, 0.7F);
                     break;
                 case 2:
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.5F, 0.2F);
+                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BASEDRUM , 0.5F, 0.2F);
                     break;
                 case 3:
                     counter = 0;
