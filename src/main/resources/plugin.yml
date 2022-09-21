@@ -1,7 +1,7 @@
 name: FearFeeling
 main: com.goyanov.fear.main.FearFeeling
 version: 2.7
-api-version: 1.13
+api-version: 1.12
 author: Groman
 softdepend: [PlaceholderAPI]
 commands:
